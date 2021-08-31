@@ -19,14 +19,15 @@ export class BlankPageComponent  {
   hotRegisterer:any
   row_id:any;
    constructor(private itemService: itemService,private tableCustomRender: tableCustomRender) { 
+
+  }
+
+  ngOnInit(): void {
     this.itemService.getAllItem().subscribe(async(data)=>{
       this.itemService.Table_Headers_Key().subscribe(async(colHeaders)=>{
         await this.tableCustomRender.updateTable(data,colHeaders)
       })
     })
-  }
-
-  ngOnInit(): void {
     
   }
 

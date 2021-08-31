@@ -20,11 +20,12 @@ export class tableCustomRender  {
     //hotSettings:any;
     alex:any;
     data:any;
-    //id:any = 'hotInstance';
+    id:any = 'hotInstance';
     hotRegisterer:HotTableRegisterer;
     row_id:any;
     fillHandle_direction:any='';
-
+    colIndex:any = 0;
+    newInstance:Handsontable.default;
   constructor(private itemService:itemService ) {
       let test = new characterModel
     console.log(test)
@@ -34,8 +35,8 @@ export class tableCustomRender  {
     let hotSettings = await this.customRender(data,colHeaders,'','');
     this.hotRegisterer = new HotTableRegisterer()
     let example = document.getElementById('hotInstance');
-    let newInstance = new Handsontable.default(example, hotSettings);
-    this.hotRegisterer.registerInstance('hotInstance',newInstance)
+    this.newInstance = new Handsontable.default(example, hotSettings);
+    this.hotRegisterer.registerInstance('hotInstance',this.newInstance)
     //console.log(this.hotRegisterer.(this.id))
     //if(this.hotRegisterer.getInstance(this.id)){
     //this.hotRegisterer.getInstance(this.id).destroy();
@@ -49,9 +50,8 @@ export class tableCustomRender  {
     var hotSettings;
     let newArray = [{}];
     for(var i=0;data.length > i;i++){
-     // let temp = data[i].picturethumb.replace('..','http://rfq.edgeho.me')
-     let temp=""
-     newArray.push([null,false,data[i]._id,data[i].code,data[i].grupo,data[i].notes,data[i].matrix,data[i].pkging,data[i].size_h,data[i].status,data[i].vendor,data[i].vendor2,data[i].vendor3,data[i].vendor4,data[i].vendor5,data[i].vendor6,data[i].vendor7,data[i].vendor8,data[i].vendor9,data[i].auditlog,data[i].customer,data[i].dilution,data[i].fob_cost,data[i].material,data[i].quantity,data[i].size_l_w,data[i].vendor10,data[i].vendor10,data[i].vendor11,data[i].vendor12,data[i].case_pack,data[i].duty_rate,data[i].prod_link,data[i].wholesale,data[i].code_grupo,
+      let temp = data[i].picturethumb.replace('..','http://rfq.edgeho.me')
+     newArray.push([false,data[i]._id,data[i].code,data[i].grupo,data[i].notes,data[i].matrix,data[i].pkging,data[i].size_h,data[i].status,data[i].vendor,data[i].vendor2,data[i].vendor3,data[i].vendor4,data[i].vendor5,data[i].vendor6,data[i].vendor7,data[i].vendor8,data[i].vendor9,data[i].auditlog,data[i].customer,data[i].dilution,data[i].fob_cost,data[i].material,data[i].quantity,data[i].size_l_w,data[i].vendor10,data[i].vendor10,data[i].vendor11,data[i].vendor12,data[i].case_pack,data[i].duty_rate,data[i].prod_link,data[i].wholesale,data[i].code_grupo,
        data[i].fob_margin,data[i].item_label,data[i].ldp_margin,data[i].poe_margin,data[i].production,data[i].treatments,data[i].comp_retail,data[i].default_cbm,data[i].description,data[i].fob_netsell,data[i].fob_royalty,data[i].landed_cost,data[i].ldp_netsell,data[i].ldp_royalty,data[i].poe_netsell,data[i].poe_royalty,data[i].vendor1_cbm,data[i].vendor2_cbm,data[i].vendor3_cbm,data[i].vendor4_cbm,data[i].vendor5_cbm,data[i].vendor6_cbm,
        data[i].vendor7_cbm,data[i].vendor8_cbm,data[i].vendor9_cbm,data[i].construction,data[i].created_date,data[i].date_request,data[i].delivery_loc,temp,data[i].quote_update,data[i].style_number,data[i].vendor10_cbm,data[i].vendor11_cbm,data[i].vendor12_cbm,data[i].cbm_per_piece,data[i].fob_pricesale,data[i].fob_sellprice,data[i].ldp_pricesale,data[i].ldp_sellprice,data[i].logistic_load,data[i].poe_pricesale,data[i].poe_sellprice,data[i].price_per_cbm,data[i].vendor1_amount,
        ,data[i].vendor1_status,data[i].vendor2_amount,data[i].vendor2_status,data[i].vendor3_amount,data[i].vendor3_status,data[i].vendor4_amount,data[i].vendor4_status,data[i].vendor5_amount,data[i].vendor5_status,data[i].vendor6_amount,data[i].vendor6_status,data[i].vendor7_amount,data[i].vendor7_status,data[i].vendor8_amount,data[i].vendor8_status,data[i].vendor9_amount,data[i].vendor9_status,data[i].vendor10_amount,data[i].vendor10_status,data[i].vendor11_amount,data[i].vendor11_status,data[i].vendor12_amount
@@ -62,13 +62,13 @@ export class tableCustomRender  {
     return hotSettings = Handsontable.default.DefaultSettings = {
       data:newArray,
       columns: [
-        {
-            readOnly: true,
-            renderer: (instance, TD, row, col, prop, value, cellProperties) => {
-              TD.innerHTML = `<button id="button1" class="upsent">UPSENT</button><button id="button2" class="present">PRESENT</button>`
-              return TD;
-            }
-          },
+        // {
+        //     readOnly: true,
+        //     renderer: (instance, TD, row, col, prop, value, cellProperties) => {
+        //       TD.innerHTML = `<button id="button1" class="upsent">UPSENT</button><button id="button2" class="present">PRESENT</button>`
+        //       return TD;
+        //     }
+        //   },
           {
               type:"checkbox"
           }
@@ -80,22 +80,22 @@ export class tableCustomRender  {
             let img = null;
   
             if (escaped.indexOf('http') === 0) {
-              img = document.createElement('IMG');
-              img.src = value;
-                img.event = "test()"
-              Handsontable.default.dom.addEvent(img, 'mousedown', event => {
-                event.preventDefault();
-              });
-  
-              Handsontable.default.dom.empty(td);
-              td.appendChild(img);
-  
-            } else {
-              Handsontable.default.renderers.TextRenderer.apply(this, arguments);
+                img = document.createElement('IMG');
+                img.src = value;
+    
+                Handsontable.default.dom.addEvent(img, 'mousedown', event => {
+                  event.preventDefault();
+                });
+    
+                Handsontable.default.dom.empty(td);
+                td.appendChild(img);
+    
+              } else {
+                Handsontable.default.renderers.TextRenderer.apply(this, arguments);
+              }
+    
+              return td;
             }
-  
-            return td;
-          }
         },
       {},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},
       ],
@@ -105,10 +105,11 @@ export class tableCustomRender  {
         return `<img src="/assets/icons/carret-up-down.svg" alt="Exclamation mark">`;          
       },
       colHeaders(index) {
-          console.log()
+          //console.log()
           //console.log(index)
           //colHeaders[index].title
         //colHeaders[index].field
+        //this.getInitializedElements(index)
         return index.toString()
         if(1 == index && '0'){
            // return `<p>`+index+`</p><input type="text" id=`+'colHeader_'+index+ '_' + Math.random().toString(36).substring(7)+` value="`+currentValue+`" class="upsent" />`;
@@ -131,6 +132,8 @@ export class tableCustomRender  {
           }
         }
       },
+      viewportColumnRenderingOffset: 1000,
+      viewportRowRenderingOffset: 1000,
       manualColumnMove: true,
       manualRowMove: true,
       columnSorting: true,
@@ -146,7 +149,6 @@ export class tableCustomRender  {
           this.deselectCell();
         }
       },
-      height: 500,
       fillHandle: {
         // enable plugin in vertical direction and with autoInsertRow as false
         autoInsertRow: false,
@@ -155,6 +157,7 @@ export class tableCustomRender  {
      
       manualColumnResize: true,
       width: '100%',
+      colWidths: '50px',
       licenseKey: 'non-commercial-and-evaluation',
       afterOnCellMouseDown: (event, coords, TD) => {
          
@@ -198,27 +201,27 @@ export class tableCustomRender  {
            }else if(!event.target.value && event.target.selectionStart == event.target.selectionEnd){
             value = event.key
            }
-        
-        const filtersPlugin = this.hotRegisterer.getInstance('hotInstance').getPlugin('filters');
-        console.log(filtersPlugin)
+        //console.log(this.hotRegisterer.getInstance('hotInstance').getData())
+        const filtersPlugin = this.newInstance.getPlugin('filters');
         filtersPlugin.removeConditions(colIndex);
-        console.log(filtersPlugin.addCondition(colIndex, 'contains', [value])); 
         filtersPlugin.addCondition(colIndex, 'contains', [value]);
         filtersPlugin.filter();
     }
-       addEventListeners = (input, colIndex) => {
+       addEventListeners = (input) => {
         return input.addEventListener('keydown', event => {
+            let inputOuterHTML = input.parentElement.parentElement.outerHTML
+            let value = inputOuterHTML.split('<')
+            value = value[5].split('>')
           var alphabet = [
 "Backspace","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","0","1","2","3","4","5","6","7","8","9",'/','*','-','+','.','\\','!','@','#','$','%','^','"',';','=','_',')','(','&','{','}']
             
             let falseEvent= false;
-            console.log(event.ctrlKey)
                 if(!alphabet.includes(event.key) && event.ctrlKey == true || alphabet.includes(event.key) && event.ctrlKey == true){
                     falseEvent = true
                 }
  
            if(!falseEvent)
-          this.debounceFn(colIndex, event);
+          this.debounceFn(value[1], event);
         });
       };
       
@@ -226,10 +229,11 @@ export class tableCustomRender  {
        getInitializedElements = colIndex => {
         const div = document.createElement('div');
         const input = document.createElement('input');
+        input.setAttribute( "id",``+'colHeader_'+colIndex+ '_' + Math.random().toString(36).substring(7)+``)
         const br = document.createElement('br');
         div.className = 'filterHeader';
       
-        this.addEventListeners(input, colIndex);
+        this.addEventListeners(input);
       
         div.appendChild(input);
         div.appendChild(br)
@@ -243,8 +247,10 @@ export class tableCustomRender  {
         if (typeof col !== 'number') {
           return col;
         }
-      
-        if (col >= 0 && TH.childElementCount < 2) {
+        if(col >= this.colIndex){
+            this.colIndex = col
+        }
+        if (col >= 0 && TH.childElementCount < 2 ) {
           TH.appendChild(this.getInitializedElements(col));
         }
       };
