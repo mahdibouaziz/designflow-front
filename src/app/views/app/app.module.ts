@@ -8,10 +8,16 @@ import { LayoutContainersModule } from 'src/app/containers/layout/layout.contain
 import { HotTableModule } from '@handsontable/angular';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog';
+import { UiModalsContainersModule } from 'src/app/containers/ui/modals/ui.modals.containers.module';
 
 @NgModule({
   declarations: [BlankPageComponent, AppComponent],
   imports: [
+    UiModalsContainersModule,
+    MatDialogModule,
+    MatButtonModule,
     MatInputModule,
     MatCheckboxModule,
     HotTableModule,

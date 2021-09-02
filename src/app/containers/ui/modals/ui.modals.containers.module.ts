@@ -19,9 +19,11 @@ import { ModalInnerComponent } from './modal-component/modal-inner-component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { addProduct } from './addProduct/addProduct.component';
 
 @NgModule({
   declarations: [
+    addProduct,
     ModalTemplateComponent,
     ModalComponentComponent,
     ModalNestedComponent,
@@ -48,6 +50,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
   providers: [],
   entryComponents: [ModalInnerComponent],
   exports: [
+    addProduct,
     ModalTemplateComponent,
     ModalComponentComponent,
     ModalNestedComponent,

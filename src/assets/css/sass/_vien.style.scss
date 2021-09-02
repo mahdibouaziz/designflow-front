@@ -133,6 +133,9 @@ html {
 .mat-checkbox-checked .mat-checkbox-checkmark{
 opacity: 0!important;
 }
+.handsontable .currentRow {
+  background: #FCE4EC
+}
 .handsontable .ht__manualRowMove--backlight {
   background: #bd0a0a;
   background: rgba(224, 5, 5, 0.25);
@@ -148,6 +151,9 @@ opacity: 0!important;
 }
 #hot-display-license-info{
   display: none;
+}
+div.div.div.table.print-friendly tr td, div.div.div.table.print-friendly tr th {
+  page-break-inside: avoid;
 }
 body {
   font-family: "Nunito", sans-serif;

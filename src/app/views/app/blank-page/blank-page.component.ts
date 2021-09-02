@@ -6,6 +6,8 @@ import { observable } from 'rxjs';
 import { itemService } from '../../../helpers/services/item.service'
 import { HotTableRegisterer } from '@handsontable/angular';
 import { tableCustomRender } from '../../../helpers/services/table-custom-render.service'
+import {MatDialog} from '@angular/material/dialog';
+import {addProduct} from '../../../containers/ui/modals/addProduct/addProduct.component'
 @Component({
   selector: 'app-blank-page',
   templateUrl: './blank-page.component.html'
@@ -18,7 +20,7 @@ export class BlankPageComponent  {
   id:any = 'hotInstance';
   hotRegisterer:any
   row_id:any;
-   constructor(private itemService: itemService,private tableCustomRender: tableCustomRender) { 
+   constructor(private itemService: itemService,private tableCustomRender: tableCustomRender,public dialog: MatDialog) { 
 
   }
 
@@ -30,6 +32,23 @@ export class BlankPageComponent  {
     })
     
   }
+
+  onNewProduct(){
+    this.tableCustomRender.onNewProduct()
+  //   const dialogRef = this.dialog.open(DialogContentExampleDialog);
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log(`Dialog result: ${result}`);
+  //   });
+   }
+
+   export(){
+     this.tableCustomRender.exportToExcel();
+   }
+   onPrint(){
+     this.tableCustomRender.onPrint();
+   }
+  
 
 
 }

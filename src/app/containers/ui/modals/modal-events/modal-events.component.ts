@@ -23,7 +23,7 @@ export class ModalEventsComponent {
       this.modalService.onShow,
       this.modalService.onShown,
       this.modalService.onHide,
-      this.modalService.onHidden
+      this.modalService.onHidden,
     ]).subscribe(() => this.changeDetection.markForCheck());
 
     this.subscriptions.push(
