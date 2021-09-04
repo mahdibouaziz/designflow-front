@@ -10,9 +10,9 @@ image: node:12.7-alpine
           - npm run build --prod
 
   branches:
-    cicd-test:
+    master:
       - step:
-         name: Deployment
+         name: deployment
          image: google/cloud-sdk:latest
          caches:
            - docker
